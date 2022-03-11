@@ -66,13 +66,11 @@ func (u *UserController) Login(c echo.Context) error {
 
 	user, err := u.Usecase.Login(ctx, userDomain.MSISDN, userDomain.Password)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, res.BadRequestResponse("Failed login"))
+		return c.JSON(http.StatusUnauthorized, res.BadRequestResponse("Email or password is incorrect"))
 	}
 
 	loginResponse := responses.LoginResponse{
-		ID:       user.Id,
-		Username: user.Username,
-		Token:    user.Token,
+		Token: user.Token,
 	}
 
 	return c.JSON(http.StatusOK, res.SuccessResponseData("Login success", loginResponse))

@@ -12,9 +12,7 @@ type UserResponse struct {
 }
 
 type LoginResponse struct {
-	ID       string
-	Username string
-	Token    string
+	Token string
 }
 
 func FromDomain(domain users.Domain) UserResponse {
