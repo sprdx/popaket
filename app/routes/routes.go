@@ -13,8 +13,8 @@ type ControllerList struct {
 func (c ControllerList) InitRoutes(e *echo.Echo) {
 	e.Debug = true
 
-	// e.POST("/login", controllers.LoginUserController)
 	e.POST("/users", c.UserController.Register)
+	e.POST("/login", c.UserController.Login)
 
 	// r := e.Group("/jwt")
 	// r.Use(middleware.JWT([]byte(constants.SECRET_JWT)))
