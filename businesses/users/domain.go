@@ -17,7 +17,7 @@ type Domain struct {
 type DomainRepository interface {
 	Create(ctx context.Context, domain Domain) (Domain, error)
 	Login(ctx context.Context, msisdn string, password string) (Domain, error)
-	GetById(ctx context.Context, token string) (Domain, error)
+	GetById(ctx context.Context, id string) (Domain, error)
 }
 
 type DomainService interface {

@@ -35,3 +35,8 @@ func (u *Usecase) Login(ctx context.Context, msisdn string, password string) (Do
 
 	return u.Repo.Login(ctx, msisdn, password)
 }
+
+func (u *Usecase) GetById(ctx context.Context, id string) (Domain, error) {
+
+	return u.Repo.GetById(ctx, id)
+}

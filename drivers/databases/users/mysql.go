@@ -59,3 +59,11 @@ func (u *UserRepository) Login(ctx context.Context, msisdn string, password stri
 
 	return user.ToDomain(), nil
 }
+
+func (u *UserRepository) GetById(ctx context.Context, id string) (users.Domain, error) {
+	var user Users
+	if err := u.Conn.Where("id = ?", id).First(&user).Error; err != nil {
+		return users.Domain{}, err
+	}
+	return user.ToDomain(), nil
+}

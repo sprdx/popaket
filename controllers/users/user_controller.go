@@ -5,6 +5,7 @@ import (
 	"popaket/businesses/users"
 	requests "popaket/controllers/users/request"
 	responses "popaket/controllers/users/response"
+	"popaket/helpers"
 	res "popaket/responses"
 	"strings"
 
@@ -66,7 +67,7 @@ func (u *UserController) Login(c echo.Context) error {
 
 	user, err := u.Usecase.Login(ctx, userDomain.MSISDN, userDomain.Password)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, res.BadRequestResponse("Email or password is incorrect"))
+		return c.JSON(http.StatusUnauthorized, res.BadRequestResponse("MSISDN or password is incorrect"))
 	}
 
 	loginResponse := responses.LoginResponse{
@@ -74,4 +75,24 @@ func (u *UserController) Login(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, res.SuccessResponseData("Login success", loginResponse))
+}
+
+func (u *UserController) GetById(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	userId := helpers.ExtractTokenUserId(c)
+
+	user, err := u.Usecase.GetById(ctx, userId)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, res.BadRequestResponse("Operation Failed"))
+	}
+
+	response := responses.UserResponse{
+		ID:       user.Id,
+		Name:     user.Name,
+		Username: user.Username,
+		MSISDN:   user.MSISDN,
+	}
+
+	return c.JSON(http.StatusOK, res.SuccessResponseData("Operation success", response))
 }
